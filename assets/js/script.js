@@ -1,8 +1,9 @@
 $(document).ready(function () {
+  function limpiarErrores() {
+    document.querySelector(".errorNumero").innerHTML = "";
+};
   $("#btn").click(function (event) {
-    function limpiarErrores() {
-      document.querySelector(".errorNumero").innerHTML = "";
-  };
+    limpiarErrores();
     event.preventDefault();
     // Se vacía el DIV contenedor con id cardsHero y chartContainer.
     $("#cardsHero").empty();
@@ -11,13 +12,16 @@ $(document).ready(function () {
     // Se crea la variable idHero que se recibe desde el imput con id numHero
     let idHero = $("#numHero").val();
     if (!(/^[0-9]+$/.test(idHero))) {
-      alert('Solo se permiten números');
+      // alert('Solo se permiten números');
+      document.querySelector(".errorNumero").innerHTML = "Solo se permiten números !!!!"
       return;
   }
   
   // Se crea else if para enviar error de id no encintrado
   else if ((idHero) > 732 || (idHero) == 0) {
-      alert("Ingrese un número desde el 1 al 732");
+      // alert("Ingrese un número desde el 1 al 732");
+      document.querySelector(".errorNumero").innerHTML = "Ingrese un número desde el 1 al 732"
+      
       return;
   }
   // Fin validación
@@ -35,24 +39,24 @@ $(document).ready(function () {
         // Se crea las card para mostrar el superheroe buscado
         $("#cardsHero").append(
           `<div class="card mb-3"><div class="row g-0"><div class="col-md-4"><img src="${
-            response.image.url
+            (response.image == "null") ? "Imagen confidencial" : response.image.url
           }" class="img-fluid rounded-start" alt="${
-            response.name
+            (response.name == "null") ? "No se conoce su nombre" : response.name
           }"></div><div class="col-md-8"><div class="card-body"><h5 class="card-title">Nombre: ${
-            response.name
+            (response.name == "null") ? "No se conoce su nombre" : response.name
           }</h5><p class="card-text">Conexiones: ${
-            response.connections["group-affiliation"]
+            (response.connections == "null") ? "Información confidencial" : response.connections["group-affiliation"]
           }</p><p class="card-text"><small class="text-body-secondary">Publicado por: ${
-            response.biography.publisher
+            (response.biography.publisher == "null") ? "Información confidencial" : response.biography.publisher
           }</small></p><hr><p class="card-text">Ocupación: ${
-            response.work.occupation
+            (response.work.occupation == "null") ? "Información confidencial" : response.work.occupation
           }</p><hr><p class="card-text">Primera aparición: ${
-            response.biography["first-appearance"]
-          }</p><hr><p class="card-text">Altura: ${response.appearance.height.join(
+            (response.biography["first-appearance"] == "null") ? "Información confidencial" : response.biography["first-appearance"]
+          }</p><hr><p class="card-text">Altura: ${(response.appearance.height == "null") ? "Información confidencial" : response.appearance.height.join(
             " / "
-          )}</p><hr><p class="card-text">Peso: ${response.appearance.weight.join(
+          )}</p><hr><p class="card-text">Peso: ${(response.appearance.weight == "null") ? "Información confidencial" : response.appearance.weight.join(
             " / "
-          )}</p><hr><p class="card-text">Alianzas: ${response.biography.aliases.join(
+          )}</p><hr><p class="card-text">Alianzas: ${(response.appearance.aliases == "null") ? "Información confidencial" : response.biography.aliases.join(
             ", "
           )}}</p></div></div></div></div>`
         );
@@ -62,24 +66,34 @@ $(document).ready(function () {
 
         let areaGrafico;
 
+        let datosXY = [];
+
+        for (const key in response.powerstats) {
+          datosXY.push(
+            {
+              label: key,
+              y: (response.powerstats[key] == "null") ? 0 : Number((response.powerstats[key]))
+            }
+          )
+        }
+
         let options =
           ("#chartContainer",
           {
+            legend:{   //legend properties
+              cursor: "pointer",
+              itemclick: explodePie
+ 
+            },
             animationEnabled: true,
             title: { text: "Stats de poderes de " + (response.name) },
             data: [
               {
                 type: "pie",
                 showInLegend: true,
-                indexLabel: "{name} - {y}",
-                dataPoints: [
-                  { y: (response.powerstats.intelligence), name: "Inteligencia" },
-                  { y: (response.powerstats.strength), name: "Fuerza" },
-                  { y: (response.powerstats.speed), name: "Velocidad" },
-                  { y: (response.powerstats.durability), name: "Resistencia" },
-                  { y: (response.powerstats.power), name: "Poder" },
-                  { y: (response.powerstats.combat), name: "Combate" },
-                ],
+                legendText:"{label}",
+                indexLabel: "{label} - {y}",
+                dataPoints: datosXY
               },
             ],
           });
