@@ -1,20 +1,36 @@
 $(document).ready(function () {
   $("#btn").click(function (event) {
-    // Se vacía el DIV contenedor con id cardsHero.
-    $("#cardsHero").empty();
+    function limpiarErrores() {
+      document.querySelector(".errorNumero").innerHTML = "";
+  };
     event.preventDefault();
+    // Se vacía el DIV contenedor con id cardsHero y chartContainer.
+    $("#cardsHero").empty();
+    $("#chartContainer").empty();
+// validación
     // Se crea la variable idHero que se recibe desde el imput con id numHero
-    let idHero = document.querySelector("#numHero").value;
+    let idHero = $("#numHero").val();
+    if (!(/^[0-9]+$/.test(idHero))) {
+      alert('Solo se permiten números');
+      return;
+  }
+  
+  // Se crea else if para enviar error de id no encintrado
+  else if ((idHero) > 732 || (idHero) == 0) {
+      alert("Ingrese un número desde el 1 al 732");
+      return;
+  }
+  // Fin validación
     // Se crea variable
     let urlBase =
       "https://www.superheroapi.com/api.php/10230942351609658/" + idHero;
-    console.log(urlBase);
+    // console.log(urlBase);
     $.ajax({
       type: "GET",
       url: urlBase,
       dataType: "json",
       success: function (response) {
-        //console.log(response.element.id);
+        // mostramos por consola el Superheroe para consultar
         console.log("Superheroe: ", response);
         // Se crea las card para mostrar el superheroe buscado
         $("#cardsHero").append(
@@ -58,11 +74,11 @@ $(document).ready(function () {
                 indexLabel: "{name} - {y}",
                 dataPoints: [
                   { y: (response.powerstats.intelligence), name: "Inteligencia" },
-                  { y: (response.powerstats.strength), name: "strength" },
-                  { y: (response.powerstats.speed), name: "speed" },
-                  { y: (response.powerstats.durability), name: "durability" },
-                  { y: (response.powerstats.power), name: "power" },
-                  { y: (response.powerstats.combat), name: "combat" },
+                  { y: (response.powerstats.strength), name: "Fuerza" },
+                  { y: (response.powerstats.speed), name: "Velocidad" },
+                  { y: (response.powerstats.durability), name: "Resistencia" },
+                  { y: (response.powerstats.power), name: "Poder" },
+                  { y: (response.powerstats.combat), name: "Combate" },
                 ],
               },
             ],
@@ -89,6 +105,8 @@ $(document).ready(function () {
       },
       error: function (error) {
         // mensaje error
+        $("#cardsHero").append("Error, No se encuentra superheroe"
+        );
       },
     });
   });
