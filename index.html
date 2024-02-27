@@ -7,39 +7,49 @@
     <meta name="keywords" content="superheroe, Superhero, " />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-    crossorigin="anonymous"
-  />
-  <link rel="stylesheet" href="assets/css/style.css" />
-    <title>Encuentra tu SuperHero</title>
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <title>Encuentre su Superhéroe</title>
   </head>
   <body>
     <nav class="navbar bg-body-tertiary" data-bs-theme="dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
-          <img src="assets/img/sh2.jpg" alt="Logo Superheroe" width="30" height="24" class="d-inline-block align-text-top">
+          <img
+            src="assets/img/sh2.jpg"
+            alt="Logo Superheroe"
+            width="30"
+            height="24"
+            class="d-inline-block align-text-top"
+          />
           <span class="ms-3">SuperHero</span>
         </a>
       </div>
     </nav>
     <div class="container">
       <div class="row justify-content-center mt-4">
-        <img src="assets/img/sh1.jpg" alt="Imagen SuperHero" class="col-6">
-        <h2 class="col-8 text-center mt-2">Encuentra su SuperHero</h2>
+        <img src="assets/img/sh1.jpg" alt="Imagen SuperHero" class="col-6" />
+        <h2 class="col-8 text-center mt-2">Encuentre su Superhéroe</h2>
       </div>
       <div class="row justify-content-center mt-4">
         <form class="d-flex flex-column col-4 justify-content-center">
-          <label for="numHero">Ingrese el Nº de super heroe a buscar</label>
-          <input id="numHero" type="text" required /><span class="errorNumero"></span>
-          <button id="btn" class="btn btn-md btn-primary mt-3 w-50">Buscar</button>
+          <label for="numHero">Ingrese el Nº de superhéroe a buscar</label>
+          <input id="numHero" type="text" class="form-control" required />
+          <span class="errorNumero text-danger"></span>
+          <button id="btn" class="btn btn-md btn-primary mt-3 w-50">
+            Buscar
+          </button>
         </form>
       </div>
       <div id="cardsHero" class="row mt-4">
+        <!-- Aquí se insertara la card con los datos del superhéroe -->
       </div>
       <div id="chartContainer" class="row my-4">
-        <!-- Aqui se insertara el grafico -->
+        <!-- Aquí se insertara el gráfico -->
       </div>
     </div>
     <!-- scripts -->
@@ -56,7 +66,7 @@
       crossorigin="anonymous"
     ></script>
     <!-- Agregamos script de canvasJS -->
-    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>   
+    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
     <!-- Agregamos nuestro script -->
     <script src="assets/js/script.js"></script>
   </body>
